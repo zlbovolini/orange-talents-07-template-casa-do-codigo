@@ -1,9 +1,6 @@
 package com.github.zlbovolini.casacodigo.author;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,15 +17,19 @@ public class Author {
     private Long id;
 
     @NotBlank
-    private final String name;
+    private String name;
     @NotBlank
     @Email
-    private final String email;
+    @Column(unique = true)
+    private String email;
     @NotBlank
     @Size(max = 400)
-    private final String description;
+    private String description;
 
-    private final Instant createdAt;
+    private Instant createdAt = Instant.now();
+
+    @Deprecated
+    Author() {}
 
     public Author(@NotBlank String name,
                   @NotBlank @Email String email,
@@ -39,7 +40,6 @@ public class Author {
         this.name = name;
         this.email = email;
         this.description = description;
-        this.createdAt = Instant.now();
     }
 
     public Author(Long id,
@@ -47,13 +47,8 @@ public class Author {
                   @NotBlank @Email String email,
                   @NotBlank @Size(max = 400) String description,
                   Instant createdAt) {
-        // Throw IllegalArgumentException if some parameter is invalid
-        checkArguments(Arrays.asList(name, email, description));
-
+        this(name, email, description);
         this.id = id;
-        this.name = name;
-        this.email = email;
-        this.description = description;
         this.createdAt = createdAt;
     }
 

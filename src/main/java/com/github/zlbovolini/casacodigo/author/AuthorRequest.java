@@ -28,7 +28,7 @@ class AuthorRequest {
         return name;
     }
 
-    String getEmail() {
+    public String getEmail() {
         return email;
     }
 
