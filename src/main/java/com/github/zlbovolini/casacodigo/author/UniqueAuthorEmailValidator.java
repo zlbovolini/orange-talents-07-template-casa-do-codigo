@@ -24,6 +24,10 @@ public class UniqueAuthorEmailValidator implements Validator {
     @Override
     public void validate(Object object, Errors errors) {
 
+        if (errors.hasErrors()) {
+            return;
+        }
+
         AuthorRequest authorRequest = (AuthorRequest) object;
         String email = authorRequest.getEmail();
 

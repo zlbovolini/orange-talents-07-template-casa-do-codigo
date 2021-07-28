@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
@@ -24,6 +25,7 @@ public class AuthorController {
     }
 
     @PostMapping
+    @Transactional
     public ResponseEntity<Void> save(@Valid @RequestBody AuthorRequest authorRequest) {
         Author author = authorRequest.toModel();
 
