@@ -85,4 +85,36 @@ public class Book {
     String getTitle() {
         return title;
     }
+
+    String getResume() {
+        return resume;
+    }
+
+    String getSummary() {
+        return summary;
+    }
+
+    BigDecimal getPrice() {
+        return price;
+    }
+
+    Integer getPages() {
+        return pages;
+    }
+
+    String getIsbn() {
+        return isbn;
+    }
+
+    LocalDate getPublishedOn() {
+        return publishedOn;
+    }
+
+    Category getCategory() {
+        return category;
+    }
+
+    Author getAuthor() {
+        return author;
+    }
 }

@@ -30,4 +30,12 @@ public class Category {
         this(name);
         this.id = id;
     }
+
+    Long getId() {
+        return id;
+    }
+
+    String getName() {
+        return name;
+    }
 }
