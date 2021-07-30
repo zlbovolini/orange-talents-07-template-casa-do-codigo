@@ -1,13 +1,15 @@
 package com.github.zlbovolini.casacodigo.category;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
+import com.github.zlbovolini.casacodigo.validation.constraint.Unique;
 
 import javax.validation.constraints.NotBlank;
 import java.util.Objects;
 
-class CategoryRequest {
+public class CategoryRequest {
 
     @NotBlank
+    @Unique(entity = Category.class, field = "name")
     private final String name;
 
     @JsonCreator

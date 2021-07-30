@@ -1,13 +1,12 @@
 package com.github.zlbovolini.casacodigo.author;
 
+import com.github.zlbovolini.casacodigo.util.ModelUtil;
+
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Objects;
 
 @Entity
 public class Author {
@@ -34,8 +33,8 @@ public class Author {
     public Author(@NotBlank String name,
                   @NotBlank @Email String email,
                   @NotBlank @Size(max = 400) String description) {
-        // Throw IllegalArgumentException if some argument is invalid
-        checkArguments(Arrays.asList(name, email, description));
+
+        ModelUtil.required(name, email, description);
 
         this.name = name;
         this.email = email;
@@ -70,14 +69,5 @@ public class Author {
 
     public Instant getCreatedAt() {
         return createdAt;
-    }
-
-    private void checkArguments(List<String> arguments) {
-        boolean hasInconsistency = arguments.stream()
-                .anyMatch(argument -> Objects.isNull(argument) || argument.isBlank());
-
-        if (hasInconsistency) {
-            throw new IllegalArgumentException("There is some invalid value");
-        }
     }
 }

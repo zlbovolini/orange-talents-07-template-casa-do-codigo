@@ -1,7 +1,6 @@
 package com.github.zlbovolini.casacodigo.author;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -12,16 +11,9 @@ import javax.validation.Valid;
 public class AuthorController {
 
     private final AuthorRepository authorRepository;
-    private final UniqueAuthorEmailValidator uniqueAuthorEmailValidator;
 
-    public AuthorController(AuthorRepository authorRepository, UniqueAuthorEmailValidator uniqueAuthorEmailValidator) {
+    public AuthorController(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
-        this.uniqueAuthorEmailValidator = uniqueAuthorEmailValidator;
-    }
-
-    @InitBinder("authorRequest")
-    protected void initBinder(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(uniqueAuthorEmailValidator);
     }
 
     @PostMapping

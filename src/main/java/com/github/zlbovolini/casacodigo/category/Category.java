@@ -1,8 +1,9 @@
 package com.github.zlbovolini.casacodigo.category;
 
+import com.github.zlbovolini.casacodigo.util.ModelUtil;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
-import java.util.Arrays;
 
 @Entity
 public class Category {
@@ -19,7 +20,7 @@ public class Category {
     Category() {}
 
     Category(@NotBlank String name) {
-        // Throw IllegalArgumentException if some argument is invalid
+        ModelUtil.required();
 
         this.name = name;
     }

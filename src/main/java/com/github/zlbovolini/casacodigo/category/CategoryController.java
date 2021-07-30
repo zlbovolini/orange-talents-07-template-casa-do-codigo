@@ -1,7 +1,6 @@
 package com.github.zlbovolini.casacodigo.category;
 
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.transaction.Transactional;
@@ -12,17 +11,9 @@ import javax.validation.Valid;
 public class CategoryController {
 
     private final CategoryRepository categoryRepository;
-    private final UniqueCategoryNameValidator uniqueCategoryNameValidator;
 
-    public CategoryController(CategoryRepository categoryRepository,
-                              UniqueCategoryNameValidator uniqueCategoryNameValidator) {
+    public CategoryController(CategoryRepository categoryRepository) {
         this.categoryRepository = categoryRepository;
-        this.uniqueCategoryNameValidator = uniqueCategoryNameValidator;
-    }
-
-    @InitBinder("categoryRequest")
-    protected void initBinder(WebDataBinder webDataBinder) {
-        webDataBinder.addValidators(uniqueCategoryNameValidator);
     }
 
     @PostMapping
