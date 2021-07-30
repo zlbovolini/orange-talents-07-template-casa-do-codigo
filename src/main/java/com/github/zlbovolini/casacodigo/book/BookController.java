@@ -1,10 +1,9 @@
 package com.github.zlbovolini.casacodigo.book;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,7 +15,13 @@ import javax.validation.Valid;
 public class BookController {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private final EntityManager entityManager;
+    private final BookRepository bookRepository;
+
+    public BookController(EntityManager entityManager, BookRepository bookRepository) {
+        this.entityManager = entityManager;
+        this.bookRepository = bookRepository;
+    }
 
     @PostMapping
     @Transactional
@@ -26,5 +31,13 @@ public class BookController {
         entityManager.persist(book);
 
         return ResponseEntity.ok().build();
+    }
+
+    @GetMapping
+    public ResponseEntity<?> findAll(Pageable pageable) {
+        Page<BookResponse> bookResponsePage = bookRepository.findAll(pageable)
+                .map(BookResponse::new);
+
+        return ResponseEntity.ok(bookResponsePage);
     }
 }

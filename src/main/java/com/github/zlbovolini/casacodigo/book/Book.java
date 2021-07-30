@@ -77,4 +77,12 @@ public class Book {
         this.category = category;
         this.author = author;
     }
+
+    Long getId() {
+        return id;
+    }
+
+    String getTitle() {
+        return title;
+    }
 }
