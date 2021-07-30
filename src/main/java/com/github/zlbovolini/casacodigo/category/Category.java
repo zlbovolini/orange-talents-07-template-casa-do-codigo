@@ -21,14 +21,7 @@ public class Category {
 
     Category(@NotBlank String name) {
         ModelUtil.required();
-
         this.name = name;
-    }
-
-    Category(Long id,
-             @NotBlank String name) {
-        this(name);
-        this.id = id;
     }
 
     Long getId() {
