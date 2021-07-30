@@ -10,6 +10,7 @@ import com.github.zlbovolini.casacodigo.validation.constraint.Unique;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Optional;
 import java.util.function.BiFunction;
 
 import static com.fasterxml.jackson.annotation.JsonCreator.Mode.PROPERTIES;
@@ -68,10 +69,12 @@ public class BookRequest {
         this.authorId = authorId;
     }
 
-    public Book toModel(BiFunction<Class<?>, Object, ?> find) {
+    public Book toModel(@NotNull BiFunction<Class<?>, Object, ?> find) {
 
-        Category category = (Category) find.apply(Category.class, categoryId);
-        Author author = (Author) find.apply(Author.class, authorId);
+        Category category = Optional.ofNullable((Category) find.apply(Category.class, categoryId))
+                .orElseThrow();
+        Author author = Optional.ofNullable((Author) find.apply(Author.class, authorId))
+                .orElseThrow();
 
         return new Book(title, resume, summary, price, pages, isbn, publishedOn, category, author);
     }
