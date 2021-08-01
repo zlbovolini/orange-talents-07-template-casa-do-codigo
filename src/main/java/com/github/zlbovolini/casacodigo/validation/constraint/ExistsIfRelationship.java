@@ -1,6 +1,6 @@
 package com.github.zlbovolini.casacodigo.validation.constraint;
 
-import com.github.zlbovolini.casacodigo.validation.validator.UniqueRelationshipValidator;
+import com.github.zlbovolini.casacodigo.validation.validator.ExistsIfRelationshipValidator;
 
 import javax.validation.Constraint;
 import javax.validation.Payload;
@@ -12,10 +12,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 @Target(TYPE)
 @Retention(RUNTIME)
-@Constraint(validatedBy = UniqueRelationshipValidator.class)
-public @interface UniqueRelationship {
+@Constraint(validatedBy = ExistsIfRelationshipValidator.class)
+public @interface ExistsIfRelationship {
 
-    String message() default "{com.github.zlbovolini.constraints.UniqueRelationship}";
+    String message() default "{com.github.zlbovolini.constraints.ExistsIfRelationship}";
 
     Class<?>[] groups() default {};
 

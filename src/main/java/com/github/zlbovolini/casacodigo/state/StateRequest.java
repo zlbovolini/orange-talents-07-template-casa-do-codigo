@@ -3,7 +3,8 @@ package com.github.zlbovolini.casacodigo.state;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.github.zlbovolini.casacodigo.country.Country;
 import com.github.zlbovolini.casacodigo.validation.constraint.Exists;
-import com.github.zlbovolini.casacodigo.validation.constraint.UniqueStateInCountry;
+import com.github.zlbovolini.casacodigo.validation.constraint.UniqueRelationship;
+import com.github.zlbovolini.casacodigo.validation.rule.RelationshipWithRule;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -12,8 +13,8 @@ import java.util.function.BiFunction;
 
 import static com.fasterxml.jackson.annotation.JsonCreator.Mode.PROPERTIES;
 
-@UniqueStateInCountry(entity = State.class, using = "name")
-public class StateRequest implements UniqueRelationship {
+@UniqueRelationship(entity = State.class, field = "name", using = "name", relationship = "country")
+public class StateRequest implements RelationshipWithRule<String> {
 
     @NotBlank
     private final String name;
@@ -40,12 +41,12 @@ public class StateRequest implements UniqueRelationship {
     }
 
     @Override
-    public String getIdentifier() {
+    public String getRuleAttribute() {
         return name;
     }
 
     @Override
-    public Long getRelationship() {
+    public Long getRelationshipId() {
         return countryId;
     }
 

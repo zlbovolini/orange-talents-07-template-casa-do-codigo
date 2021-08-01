@@ -1,6 +1,6 @@
 package com.github.zlbovolini.casacodigo.validation.validator;
 
-import com.github.zlbovolini.casacodigo.validation.constraint.UniqueRelationship;
+import com.github.zlbovolini.casacodigo.validation.constraint.ExistsIfRelationship;
 import com.github.zlbovolini.casacodigo.validation.rule.RelationshipWithRule;
 
 import javax.persistence.EntityManager;
@@ -9,7 +9,7 @@ import javax.persistence.TypedQuery;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class UniqueRelationshipValidator implements ConstraintValidator<UniqueRelationship, RelationshipWithRule<?>> {
+public class ExistsIfRelationshipValidator implements ConstraintValidator<ExistsIfRelationship, RelationshipWithRule<?>> {
 
     private Class<?> entity;
     private String field;
@@ -22,7 +22,7 @@ public class UniqueRelationshipValidator implements ConstraintValidator<UniqueRe
     private EntityManager entityManager;
 
     @Override
-    public void initialize(UniqueRelationship constraintAnnotation) {
+    public void initialize(ExistsIfRelationship constraintAnnotation) {
         entity = constraintAnnotation.entity();
         field = constraintAnnotation.field();
         using = constraintAnnotation.using();
@@ -34,20 +34,18 @@ public class UniqueRelationshipValidator implements ConstraintValidator<UniqueRe
     @Override
     public boolean isValid(RelationshipWithRule relationshipWithRule, ConstraintValidatorContext context) {
         StringBuilder sb = new StringBuilder()
-                .append("SELECT count(s) = 0 FROM ")
+                .append("SELECT count(*) > 0 FROM ")
                 .append(entity.getName())
-                .append(" s JOIN s.")
+                .append(" s RIGHT JOIN s.")
                 .append(relationship)
-                .append(" WHERE s.")
+                .append(" c WHERE ((s.")
                 .append(field)
-                .append(" = :name AND s.")
-                .append(relationship)
-                .append(".")
+                .append(" = :id OR :id is NULL ) AND c.")
                 .append(relationshipId)
-                .append(" = :relationship");
+                .append(" = :relationship)");
 
         TypedQuery<Boolean> query = entityManager.createQuery(sb.toString(), Boolean.class);
-        query.setParameter("name", relationshipWithRule.getRuleAttribute());
+        query.setParameter("id", relationshipWithRule.getRuleAttribute());
         query.setParameter("relationship", relationshipWithRule.getRelationshipId());
 
         context.disableDefaultConstraintViolation();

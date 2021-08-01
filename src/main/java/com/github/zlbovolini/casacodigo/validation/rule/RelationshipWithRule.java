@@ -1,4 +1,4 @@
-package com.github.zlbovolini.casacodigo.state;
+package com.github.zlbovolini.casacodigo.validation.rule;
 
 /**
  * Representa uma restrição de relacionamento de entidades.
