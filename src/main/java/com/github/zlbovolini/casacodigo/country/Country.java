@@ -1,4 +1,4 @@
-package com.github.zlbovolini.casacodigo.category;
+package com.github.zlbovolini.casacodigo.country;
 
 import com.github.zlbovolini.casacodigo.util.ModelUtil;
 
@@ -6,21 +6,20 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity
-public class Category {
+public class Country {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotBlank
-    @Column(unique = true)
     private String name;
 
     @Deprecated
-    Category() {}
+    Country() {}
 
-    Category(@NotBlank String name) {
-        ModelUtil.required();
+    Country(@NotBlank String name) {
+        ModelUtil.required(name);
         this.name = name;
     }
 

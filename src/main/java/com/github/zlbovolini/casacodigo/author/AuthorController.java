@@ -7,7 +7,7 @@ import javax.transaction.Transactional;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/api/v1/author")
+@RequestMapping("/api/v1/authors")
 public class AuthorController {
 
     private final AuthorRepository authorRepository;
